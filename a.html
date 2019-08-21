@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="box">
+    <form action="#:;" @submit="submit">
+        <input id="txt" type="text">
+        <input id="key" type="password">
+        <input type="submit" value="登录" >
+
+    </form>
+    <div>
+        <div>
+            <!--<button v-if="user==''">{{init}}</button>
+            <button v-else>{{user}}</button>-->
+            <button>{{user}}</button>
+            <button @click="keys">{{key}}</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="vue.js"></script>
+<script src="axios.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery.cookie.js"></script>
+<script>
+    //($.cookie('user','LIUYICHAO'))
+    var vm=new Vue({
+        el:"#box",
+        data: {
+            site: "菜鸟教程",
+            url: "www.runoob.com",
+            alexa: "10000",
+            init:'请登录',
+            user:'请登录',
+            key:'退出',
+        },
+        methods: {
+            details: function() {
+                return  this.site + " - 学的不仅是技术，更是梦想！ <br>";
+            },
+            fn2:function () {
+                axios
+                /* if(this.user==''){
+                        this.user=$.cookie('user')
+                    }
+                    //this.user='123'
+                    //alert($.cookie('user'))
+                    //this.user = response*/
+                    .get('./user.json')
+                    .then(function ()    {
+                        /*if(this.user==''){
+                            alert("空的")
+                            //this.user=$.cookie('user')
+                        }else {
+                            alert("不是空的")
+                           this.user=$.cookie('user')
+                        }*/
+                    })
+
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+            keys:function () {
+                alert(1)
+                this.user=$.removeCookie('user');
+                this.fn2();
+            },
+            submit:function () {
+                var name=$("#txt").val();
+                var key=$("#key").val();
+                $.cookie('user',name);
+                $.cookie('key','key');
+                this.fn2();
+            }
+        },
+        mounted(){
+
+                axios
+                    .get('./user.json')
+                    .then(response => (
+                        //this.user='123'
+                        //alert($.cookie('user'))
+                        this.user=$.cookie('user')
+                        //this.user = response
+                    ))
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+        }
+    });
+   /* axios.get('./user.json')
+        .then(function (response) {
+            //console.log(response);
+            console.log(response)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });*/
+
+</script>

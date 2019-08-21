@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="swiper-4.2.0.min.css">
+</head>
+<style>
+    .swiper-container {
+        width: 600px;
+        height: 300px;
+        margin-top: 30px;
+    }
+
+    .swiper-wrapper div {
+        background-color: #ccc;
+        color: #333;
+    }
+
+    .active_color {
+        color: #cf101c;
+    }
+
+    .layui-form-radioed > i {
+        color: #cf101c;
+    }
+</style>
+<body>
+<div class="layui-container" id="active">
+    {{A}}
+    <div class="swiper-container">
+        <ul id="swiper-wrapper" class="swiper-wrapper">
+            <li class="swiper-slide">
+                <div class="layui-form">
+                    <div>
+                        1、非法获取证券、期货交易内幕信息的人员，在涉及证券的发行，证券、期货交易或者其他对证券、期货交易价格有重大影响的信息尚未公开前，买入或者卖出该证券，情节特别严重的，处(
+                        )有期徒刑，并处违法所得(
+                        )罚金。
+                    </div>
+                    <input type="radio" name="sex" :title="B">
+                    <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>{{A}}</div></div>
+                    <br>
+                    <input type="radio" name="sex" title="B、5 年以上 10 年以下;2 倍以上 5 倍以下">
+                    <br>
+                    <input type="radio" name="sex" title="C、5 年以上 10 年以下;2 倍以上 5 倍以下">
+                    <br>
+                    <input type="radio" name="sex" title="D、5 年以上 10 年以下;2 倍以上 5 倍以下">
+                </div>
+            </li>
+            <li class="swiper-slide" style="background-color: olive">
+                <div class="layui-form">
+                    <div>
+                        1、非法获取证券、期货交易内幕信息的人员，在涉及证券的发行，证券、期货交易或者其他对证券、期货交易价格有重大影响的信息尚未公开前，买入或者卖出该证券，情节特别严重的，处(
+                        )有期徒刑，并处违法所得(
+                        )罚金。
+                    </div>
+                    <!--<input type="radio" name="sex" v-bind:title="A">-->
+                    <input type="radio" name="sex" :title="A">
+                    <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>{{A}}</div></div>
+                    <br>
+                    <input type="radio" name="sex" title="B、5 年以上 10 年以下;2 倍以上 5 倍以下">
+                    <br>
+                    <input type="radio" name="sex" title="C、5 年以上 10 年以下;2 倍以上 5 倍以下">
+                    <br>
+                    <input type="radio" name="sex" title="D、5 年以上 10 年以下;2 倍以上 5 倍以下">
+                </div>
+            </li>
+            <li class="swiper-slide" style="background-color: orange">Slide 3</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+<script src="jquery.min.js"></script>
+<script src="layui/layui.all.js"></script>
+<script src="vue.js"></script>
+<script src="axios.min.js"></script>
+<script src="swiper-4.2.0.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#active",
+        data: {
+            A: "菜鸟教程",
+            B: "这是VUE",
+            C: "10000",
+            D: '请登录',
+            key: '退出',
+        },
+        methods: {
+            fun: function () {
+                axios
+                    .get('./sw.json')
+                    .then(function (data) {
+                        console.log(data)
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            }
+        },
+        mounted() {
+
+        }
+    });
+    var mySwiper = new Swiper('.swiper-container', {
+        on: {
+            slideChange: function () {
+                console.log(vm.site='123')
+            }
+        },
+
+        //direction: 'vertical', // 垂直切换选项
+        loop: false, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+            // el: '.swiper-pagination',
+        },
+        // 如果需要前进后退按钮
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // 如果需要滚动条
+        scrollbar: {
+            //el: '.swiper-scrollbar',
+            el: false,
+        },
+    })
+</script>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+    $("#swiper-wrapper li").on("click", "div", function () {
+        $("#swiper-wrapper li input").attr({
+            "disabled": "disabled",
+        });
+    });
+</script>
+<div id="box">
+    <input value="123"> <br>
+    <input value="222"><br>
+    <input value="333"><br>
+</div>
+<script>
+    $("#box").on('click', 'input', function () {
+        $("#box input").disabled = 'disabled'
+        //$("#box input").attr("disabled","disabled")
+    })
+</script>
